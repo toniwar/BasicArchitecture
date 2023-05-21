@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="birthDate">Birth date</string>
+    <string name="next">Next</string>
 </resources>
