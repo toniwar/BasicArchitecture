@@ -1,11 +1,11 @@
 package ru.otus.basicarchitecture.domain.models
 
 class User(
-    var name:String,
-    var surname:String,
-    var age:Int,
-    var country:String,
-    var city:String,
-    var address:String,
-    var hobby:UserHobby
-)
+    val name:String,
+    val surname:String,
+    val age:Int,
+    val country:String,
+    val city:String,
+    val address:String,
+    val hobby:Set<String>
+): ViewModelData

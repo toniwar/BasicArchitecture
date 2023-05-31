@@ -8,29 +8,29 @@ import ru.otus.basicarchitecture.domain.models.UserName
 import ru.otus.basicarchitecture.domain.models.UserSurname
 import ru.otus.basicarchitecture.domain.repository.UserRepository
 
-class UserRepositoryImpl:UserRepository {
+class UserRepositoryImpl(private val userStorage: UserStorage):UserRepository {
     override fun getData():User {
-        TODO("Not yet implemented")
+       return userStorage.getData()
     }
 
     override fun saveUserName(userName: UserName) {
-        TODO("Not yet implemented")
+        userStorage.saveUserName(userName)
     }
 
     override fun saveUserSurname(userSurname: UserSurname) {
-        TODO("Not yet implemented")
+        userStorage.saveUserSurname(userSurname)
     }
 
     override fun saveUserAge(userAge: UserAge) {
-        TODO("Not yet implemented")
+        userStorage.saveUserAge(userAge)
     }
 
     override fun saveUserAddress(userAddress: UserAddress) {
-        TODO("Not yet implemented")
+        userStorage.saveUserAddress(userAddress)
     }
 
     override fun saveUserHobby(userHobby: UserHobby) {
-        TODO("Not yet implemented")
+        userStorage.saveUserHobby(userHobby)
     }
 
 

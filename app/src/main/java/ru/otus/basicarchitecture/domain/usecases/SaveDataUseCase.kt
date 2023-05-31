@@ -5,12 +5,13 @@ import ru.otus.basicarchitecture.domain.models.UserAddress
 import ru.otus.basicarchitecture.domain.models.UserAge
 import ru.otus.basicarchitecture.domain.models.UserHobby
 import ru.otus.basicarchitecture.domain.models.UserSurname
+import ru.otus.basicarchitecture.domain.models.ViewModelData
 import ru.otus.basicarchitecture.domain.repository.UserRepository
 
 class SaveDataUseCase(private val userRepository: UserRepository) {
 
-    fun setUserName(userName: UserName){
-        userRepository.saveUserName(userName)
+    fun setUserName(userName: ViewModelData){
+        userRepository.saveUserName(userName as UserName)
     }
 
     fun setUserSurname(userSurname: UserSurname){
