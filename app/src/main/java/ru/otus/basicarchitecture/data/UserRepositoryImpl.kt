@@ -1,5 +1,6 @@
 package ru.otus.basicarchitecture.data
 
+import ru.otus.basicarchitecture.data.local_storage.UserStorage
 import ru.otus.basicarchitecture.domain.models.User
 import ru.otus.basicarchitecture.domain.models.UserAddress
 import ru.otus.basicarchitecture.domain.models.UserAge

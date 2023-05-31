@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.databinding.Fragment1Binding
-import ru.otus.basicarchitecture.domain.models.User
 import ru.otus.basicarchitecture.domain.models.UserAge
 import ru.otus.basicarchitecture.domain.models.UserName
 import ru.otus.basicarchitecture.domain.models.UserSurname
@@ -34,7 +32,7 @@ class Fragment1 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.liveData1.observe(viewLifecycleOwner){user->
+        viewModel.outputData.observe(viewLifecycleOwner){user->
             binding.apply {
                 f1NameField.setText(user.name)
                 f1SurnameField.setText(user.surname)
@@ -47,7 +45,7 @@ class Fragment1 : Fragment() {
             val surname = binding.f1SurnameField.text.toString()
             val age = binding.f1BirthDate.text.toString()
 
-            viewModel.liveData.value = listOf(
+            viewModel.inputData.value = listOf(
                 UserName(name),
                 UserSurname(surname),
                 UserAge(age.toInt())

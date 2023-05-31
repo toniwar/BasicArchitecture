@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.data
+package ru.otus.basicarchitecture.data.local_storage
 
 import android.content.Context
 import android.content.SharedPreferences.Editor

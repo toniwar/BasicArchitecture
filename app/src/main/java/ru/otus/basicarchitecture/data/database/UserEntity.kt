@@ -15,5 +15,5 @@ data class UserEntity(
     val country:String,
     val city:String,
     val address:String,
-    val hobby:List<String>
+    val hobby:Set<String>
 )

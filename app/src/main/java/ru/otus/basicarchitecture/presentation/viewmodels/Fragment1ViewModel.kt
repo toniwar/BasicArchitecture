@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ru.otus.basicarchitecture.VMStateFlags
-import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.data.UserRepositoryImpl
-import ru.otus.basicarchitecture.data.WizardCatch
+import ru.otus.basicarchitecture.data.local_storage.WizardCatch
 import ru.otus.basicarchitecture.domain.models.User
 import ru.otus.basicarchitecture.domain.models.UserAge
 import ru.otus.basicarchitecture.domain.models.UserName
@@ -22,8 +20,9 @@ class Fragment1ViewModel(context: Context):ViewModel() {
     private val userRepository by lazy { UserRepositoryImpl(wizardCatch) }
     private val getDataUseCase by lazy { GetDataUseCase(userRepository) }
     private val saveDataUseCase by lazy { SaveDataUseCase(userRepository) }
-    val liveData1 = MutableLiveData<User>()
-    val liveData = MutableLiveData<List<ViewModelData>>()
+    private val mutableOutputData = MutableLiveData<User>()
+    val outputData:LiveData<User>get() = mutableOutputData
+    val inputData = MutableLiveData<List<ViewModelData>>()
 
     init {
         loadData()
@@ -31,12 +30,12 @@ class Fragment1ViewModel(context: Context):ViewModel() {
     }
 
 
-    fun loadData(){
-        liveData1.value = getDataUseCase.getUser()
+    private fun loadData(){
+        mutableOutputData.value = getDataUseCase.getUser()
     }
 
     fun saveData(){
-        liveData.value.apply {
+        inputData.value.apply {
             val userList = this
             saveDataUseCase.apply {
                 setUserName(userList?.get(0) as UserName)

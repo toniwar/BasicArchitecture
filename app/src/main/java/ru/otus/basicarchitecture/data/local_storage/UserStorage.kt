@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.data
+package ru.otus.basicarchitecture.data.local_storage
 
 import ru.otus.basicarchitecture.domain.models.User
 import ru.otus.basicarchitecture.domain.models.UserAddress
