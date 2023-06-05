@@ -20,6 +20,7 @@ import ru.otus.basicarchitecture.domain.models.UserName
 import ru.otus.basicarchitecture.domain.models.UserSurname
 
 class WizardCatch(context: Context): UserStorage {
+
     private val sharedPreferences = context.getSharedPreferences(USER_SHARED_PREFS, Context.MODE_PRIVATE)
     private val editor:Editor = sharedPreferences.edit()
     override fun getData(): User {

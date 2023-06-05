@@ -6,19 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.databinding.Fragment1Binding
 import ru.otus.basicarchitecture.domain.models.UserAge
 import ru.otus.basicarchitecture.domain.models.UserName
 import ru.otus.basicarchitecture.domain.models.UserSurname
 import ru.otus.basicarchitecture.presentation.viewmodels.Fragment1ViewModel
+import ru.otus.basicarchitecture.presentation.viewmodels.FragmentVMFactory
+import javax.inject.Inject
 
 
 class Fragment1 : Fragment() {
-    private val viewModel by lazy {
-        ViewModelProvider(this, Fragment1ViewModel.factory(requireContext()))[Fragment1ViewModel::class.java]
-    }
+    @Inject
+    lateinit var factory:FragmentVMFactory
+    private lateinit var viewModel:Fragment1ViewModel
     private lateinit var binding: Fragment1Binding
-
 
 
     override fun onCreateView(
@@ -31,7 +33,8 @@ class Fragment1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (requireContext().applicationContext as App).appComponent.injectFragment1(this)
+        viewModel = ViewModelProvider(this, factory)[Fragment1ViewModel::class.java]
         viewModel.outputData.observe(viewLifecycleOwner){user->
             binding.apply {
                 f1NameField.setText(user.name)
