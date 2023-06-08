@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.VMStateFlags
+import ru.otus.basicarchitecture.StateFlags
 import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.presentation.fragments.*
 import ru.otus.basicarchitecture.presentation.viewmodels.ActivityVMFactory
@@ -26,10 +26,10 @@ class MainActivity : AppCompatActivity() {
         vm.liveData.observe(this){
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when(it){
-                VMStateFlags.FRAGMENT_1 -> openFragment(fragment1)
-                VMStateFlags.FRAGMENT_2 -> openFragment(Fragment2())
-                VMStateFlags.FRAGMENT_3 -> openFragment(Fragment3())
-                VMStateFlags.FRAGMENT_4 -> openFragment(Fragment4())
+                StateFlags.FRAGMENT_1 -> openFragment(fragment1)
+                StateFlags.FRAGMENT_2 -> openFragment(Fragment2())
+                StateFlags.FRAGMENT_3 -> openFragment(Fragment3())
+                StateFlags.FRAGMENT_4 -> openFragment(Fragment4())
             }
         }
 

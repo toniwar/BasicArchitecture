@@ -2,13 +2,15 @@ package ru.otus.basicarchitecture
 
 const val TABLE_NAME = "Users table"
 
+const val STATE_SHARED_PREFS = "State preferences"
+
 const val USER_SHARED_PREFS = "User preferences"
 
 const val USER_NAME_KEY = "User name"
 
 const val USER_SURNAME_KEY = "User surname"
 
-const val USER_AGE_KEY = "User age"
+const val USER_BIRTH_DATE_KEY = "User birth date"
 
 const val USER_COUNTRY_KEY = "User country"
 
@@ -21,3 +23,5 @@ const val USER_HOBBY_KEY = "User hobby"
 const val DEFAULT_NAME = "Name"
 
 const val DEFAULT_SURNAME = "Surname"
+
+const val DEFAULT_BIRTH_DATE = "11/11/1991"

@@ -1,6 +1,6 @@
 package ru.otus.basicarchitecture
 
-enum class VMStateFlags {
+enum class StateFlags {
     FRAGMENT_1,
     FRAGMENT_2,
     FRAGMENT_3,

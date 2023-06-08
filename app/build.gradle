@@ -61,4 +61,7 @@ dependencies {
     api "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    //Data store implementation
+    //implementation "androidx.datastore:datastore-preferences-android:1.1.0"
+
 }

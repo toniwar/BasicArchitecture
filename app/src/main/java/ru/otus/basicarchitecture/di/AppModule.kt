@@ -4,7 +4,10 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import ru.otus.basicarchitecture.domain.usecases.GetDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_usecases.PickDateUseCase
 import ru.otus.basicarchitecture.domain.usecases.SaveDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_usecases.GetDateUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_usecases.ValidationUseCase
 import ru.otus.basicarchitecture.presentation.fragments.Fragment1
 import ru.otus.basicarchitecture.presentation.viewmodels.ActivityVMFactory
 import ru.otus.basicarchitecture.presentation.viewmodels.FragmentVMFactory
@@ -18,12 +21,25 @@ class AppModule(val context: Context) {
         return context
     }
 
+
+
     @Provides
     fun provideFragment1VMFactory(
         getDataUseCase:GetDataUseCase,
-        saveDataUseCase:SaveDataUseCase)
+        saveDataUseCase:SaveDataUseCase,
+        pickDateUseCase: PickDateUseCase,
+        validationUseCase: ValidationUseCase,
+        getDateUseCase: GetDateUseCase
+    )
     :FragmentVMFactory{
-        return FragmentVMFactory(getDataUseCase, saveDataUseCase)
+        return FragmentVMFactory(
+            getDataUseCase,
+            saveDataUseCase,
+            pickDateUseCase,
+            validationUseCase,
+            getDateUseCase
+
+        )
     }
 
     @Provides
@@ -35,6 +51,5 @@ class AppModule(val context: Context) {
     fun provideFragment1():Fragment1{
         return Fragment1()
     }
-
 
 }

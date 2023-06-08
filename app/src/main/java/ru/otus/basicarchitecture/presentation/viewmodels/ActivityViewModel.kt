@@ -3,15 +3,15 @@ package ru.otus.basicarchitecture.presentation.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.otus.basicarchitecture.VMStateFlags
+import ru.otus.basicarchitecture.StateFlags
 
 class ActivityViewModel(): ViewModel() {
 
-    private val mutableLiveData = MutableLiveData<VMStateFlags>()
-    val liveData:LiveData<VMStateFlags> get() = mutableLiveData
+    private val mutableLiveData = MutableLiveData<StateFlags>()
+    val liveData:LiveData<StateFlags> get() = mutableLiveData
 
     init {
-        mutableLiveData.value = VMStateFlags.FRAGMENT_1
+        mutableLiveData.value = StateFlags.FRAGMENT_1
     }
 
 
