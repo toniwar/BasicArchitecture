@@ -9,7 +9,7 @@ import ru.otus.basicarchitecture.domain.usecases.SaveDataUseCase
 import ru.otus.basicarchitecture.domain.usecases.date_usecases.GetDateUseCase
 import ru.otus.basicarchitecture.domain.usecases.date_usecases.ValidationUseCase
 
-class FragmentVMFactory(
+class Fragment1VMFactory(
     private val getDataUseCase: GetDataUseCase,
     private val saveDataUseCase: SaveDataUseCase,
     private val pickDateUseCase: PickDateUseCase,
@@ -23,6 +23,18 @@ class FragmentVMFactory(
             pickDateUseCase,
             validationUseCase,
             getDateUseCase
+        ) as T
+    }
+}
+
+class Fragment2VMFactory(
+    private val getDataUseCase: GetDataUseCase,
+    private val saveDataUseCase: SaveDataUseCase,
+): ViewModelProvider.Factory{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return Fragment2ViewModel(
+            getDataUseCase, saveDataUseCase
+
         ) as T
     }
 }

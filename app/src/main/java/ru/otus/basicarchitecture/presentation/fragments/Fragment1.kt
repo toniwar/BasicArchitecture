@@ -18,8 +18,8 @@ import ru.otus.basicarchitecture.domain.models.UserName
 import ru.otus.basicarchitecture.domain.models.UserSurname
 import ru.otus.basicarchitecture.presentation.viewmodels.ActivityVMFactory
 import ru.otus.basicarchitecture.presentation.viewmodels.ActivityViewModel
+import ru.otus.basicarchitecture.presentation.viewmodels.Fragment1VMFactory
 import ru.otus.basicarchitecture.presentation.viewmodels.Fragment1ViewModel
-import ru.otus.basicarchitecture.presentation.viewmodels.FragmentVMFactory
 
 
 
@@ -31,7 +31,7 @@ class Fragment1 : Fragment() {
 
 
     @Inject
-    lateinit var factory:FragmentVMFactory
+    lateinit var factory:Fragment1VMFactory
     private lateinit var viewModel:Fragment1ViewModel
     @Inject
     lateinit var activityVMFactory: ActivityVMFactory
@@ -43,7 +43,7 @@ class Fragment1 : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = Fragment1Binding.inflate(inflater)
         return binding.root
     }
@@ -85,8 +85,6 @@ class Fragment1 : Fragment() {
                     UserBirthDate(date)
                 )
             }
-
-
             viewModel.saveData()
             activityViewModel.setFlag(StateFlags.FRAGMENT_2)
 

@@ -23,7 +23,7 @@ class SaveDataUseCase(private val userRepository: UserRepository) {
 
     }
 
-    fun setUserCountry(userAddress: UserAddress){
+    fun setUserAddress(userAddress: UserAddress){
         userRepository.saveUserAddress(userAddress)
     }
 
