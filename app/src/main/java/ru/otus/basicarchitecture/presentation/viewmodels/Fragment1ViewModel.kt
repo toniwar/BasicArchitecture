@@ -10,11 +10,10 @@ import ru.otus.basicarchitecture.domain.models.UserBirthDate
 import ru.otus.basicarchitecture.domain.models.UserName
 import ru.otus.basicarchitecture.domain.models.UserSurname
 import ru.otus.basicarchitecture.domain.models.ViewModelData
-import ru.otus.basicarchitecture.domain.usecases.GetDataUseCase
-import ru.otus.basicarchitecture.domain.usecases.date_usecases.PickDateUseCase
-import ru.otus.basicarchitecture.domain.usecases.SaveDataUseCase
-import ru.otus.basicarchitecture.domain.usecases.date_usecases.GetDateUseCase
-import ru.otus.basicarchitecture.domain.usecases.date_usecases.ValidationUseCase
+import ru.otus.basicarchitecture.domain.usecases.data_use_cases.GetDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_use_cases.PickDateUseCase
+import ru.otus.basicarchitecture.domain.usecases.data_use_cases.SaveDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_use_cases.ValidationUseCase
 
 
 class Fragment1ViewModel(
@@ -22,7 +21,6 @@ class Fragment1ViewModel(
     private val saveDataUseCase: SaveDataUseCase,
     private val pickDateUseCase: PickDateUseCase,
     private val validationUseCase: ValidationUseCase,
-    private val getDateUseCase: GetDateUseCase
 ):ViewModel() {
 
     private val mutableOutputData = MutableLiveData<User>()
@@ -43,10 +41,6 @@ class Fragment1ViewModel(
         pickDateUseCase.pickDate(context, textView)
     }
 
-    fun getDate():String{
-        return getDateUseCase.getDate()
-    }
-
 
     fun validation():Boolean{
         return validationUseCase.validation()
@@ -62,7 +56,6 @@ class Fragment1ViewModel(
                 setUserSurname(userList[1] as UserSurname)
                 setUserBirthDate(userList[2] as UserBirthDate)
             }
-
         }
         loadData()
     }

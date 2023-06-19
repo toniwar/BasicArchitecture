@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.domain.usecases.date_usecases
+package ru.otus.basicarchitecture.domain.usecases.date_use_cases
 
 import android.content.Context
 import android.widget.TextView

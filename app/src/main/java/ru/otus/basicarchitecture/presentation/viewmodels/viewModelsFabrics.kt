@@ -1,20 +1,20 @@
 package ru.otus.basicarchitecture.presentation.viewmodels
 
-import android.content.Context
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ru.otus.basicarchitecture.domain.usecases.GetDataUseCase
-import ru.otus.basicarchitecture.domain.usecases.date_usecases.PickDateUseCase
-import ru.otus.basicarchitecture.domain.usecases.SaveDataUseCase
-import ru.otus.basicarchitecture.domain.usecases.date_usecases.GetDateUseCase
-import ru.otus.basicarchitecture.domain.usecases.date_usecases.ValidationUseCase
+import ru.otus.basicarchitecture.domain.usecases.data_use_cases.GetDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.user_hobby_list_use_cases.GetHobbyListUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_use_cases.PickDateUseCase
+import ru.otus.basicarchitecture.domain.usecases.data_use_cases.SaveDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.user_hobby_list_use_cases.SetHobbyUseCase
+import ru.otus.basicarchitecture.domain.usecases.date_use_cases.ValidationUseCase
 
 class Fragment1VMFactory(
     private val getDataUseCase: GetDataUseCase,
     private val saveDataUseCase: SaveDataUseCase,
     private val pickDateUseCase: PickDateUseCase,
     private val validationUseCase: ValidationUseCase,
-    private val getDateUseCase: GetDateUseCase
 ): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return Fragment1ViewModel(
@@ -22,7 +22,6 @@ class Fragment1VMFactory(
             saveDataUseCase,
             pickDateUseCase,
             validationUseCase,
-            getDateUseCase
         ) as T
     }
 }
@@ -34,6 +33,19 @@ class Fragment2VMFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return Fragment2ViewModel(
             getDataUseCase, saveDataUseCase
+
+        ) as T
+    }
+}
+
+class Fragment3VMFactory(
+    private val getHobbyListUseCase: GetHobbyListUseCase,
+    private val setHobbyUseCase: SetHobbyUseCase,
+    private val saveDataUseCase: SaveDataUseCase
+): ViewModelProvider.Factory{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return Fragment3ViewModel(
+            getHobbyListUseCase, setHobbyUseCase, saveDataUseCase
 
         ) as T
     }

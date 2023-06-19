@@ -25,3 +25,7 @@ const val DEFAULT_NAME = "Name"
 const val DEFAULT_SURNAME = "Surname"
 
 const val DEFAULT_BIRTH_DATE = "11/11/1991"
+
+const val ENABLED_ITEM = 1
+
+const val DISABLED_ITEM = 0

@@ -31,9 +31,6 @@ object DatePickerImpl: DatePicker {
         dpd.show()
     }
 
-    override fun getDate(): String {
-        return date
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun validation(): Boolean {

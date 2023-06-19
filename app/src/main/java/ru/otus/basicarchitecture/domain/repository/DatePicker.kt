@@ -6,6 +6,6 @@ import android.widget.TextView
 interface DatePicker {
 
     fun showDatePickerDialog(context: Context, textView: TextView)
-    fun getDate():String
+
     fun validation():Boolean
 }

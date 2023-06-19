@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import ru.otus.basicarchitecture.domain.models.User
 import ru.otus.basicarchitecture.domain.models.UserAddress
 import ru.otus.basicarchitecture.domain.models.ViewModelData
-import ru.otus.basicarchitecture.domain.usecases.GetDataUseCase
-import ru.otus.basicarchitecture.domain.usecases.SaveDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.data_use_cases.GetDataUseCase
+import ru.otus.basicarchitecture.domain.usecases.data_use_cases.SaveDataUseCase
 
 class Fragment2ViewModel(
     private val getDataUseCase: GetDataUseCase,

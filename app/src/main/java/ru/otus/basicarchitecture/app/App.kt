@@ -5,6 +5,7 @@ import ru.otus.basicarchitecture.di.AppComponent
 import ru.otus.basicarchitecture.di.AppModule
 import ru.otus.basicarchitecture.di.DaggerAppComponent
 
+
  class App:Application(){
   lateinit var appComponent: AppComponent
   override fun onCreate() {

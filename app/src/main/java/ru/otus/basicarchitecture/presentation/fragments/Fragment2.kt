@@ -63,7 +63,7 @@ class Fragment2 : Fragment() {
             }
 
             viewModel.saveData()
-            activityViewModel.setFlag(StateFlags.FRAGMENT_2)
+            activityViewModel.setFlag(StateFlags.FRAGMENT_3)
 
         }
     }
