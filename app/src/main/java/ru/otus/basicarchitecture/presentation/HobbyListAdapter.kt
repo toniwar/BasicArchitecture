@@ -18,7 +18,6 @@ class HobbyListAdapter(
 
     private val itemList = mutableListOf<HobbyItem>()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HobbyListViewHolder {
         val layoutRes = when(viewType){
             ENABLED_ITEM -> R.layout.enabled_hobby_item
@@ -36,7 +35,7 @@ class HobbyListAdapter(
         val item = itemList[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
-            Log.d("VMAction", item.toString())
+            Log.d("ClickOnItem", item.toString())
             vm.changeEnableState(item)
             notifyDataSetChanged()
         }

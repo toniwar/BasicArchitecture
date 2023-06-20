@@ -8,6 +8,7 @@
     <string name="city">City</string>
     <string name="address">Address</string>
     <string name="chose_hobby">Chose hobby</string>
+    <string name="user_info">User Info</string>
 
     <string-array name="hobbyList">
         <item>Frontend</item>

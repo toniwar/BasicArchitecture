@@ -51,6 +51,18 @@ class Fragment3VMFactory(
     }
 }
 
+class Fragment4VMFactory(
+    private val getDataUseCase: GetDataUseCase
+): ViewModelProvider.Factory{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return Fragment4ViewModel(
+            getDataUseCase
+
+        ) as T
+    }
+}
+
+
 class ActivityVMFactory(): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return ActivityViewModel() as T

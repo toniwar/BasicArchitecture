@@ -14,7 +14,7 @@ object DatePickerImpl: DatePicker {
     private val d = calendar.get(Calendar.DAY_OF_MONTH)
     private val m = calendar.get(Calendar.MONTH)
     private val y = calendar.get(Calendar.YEAR)
-    private var date = "11/11/11"
+    private var date = "11/11/1991"
     private var day = 0
     private var month = 0
     private var year = 0
@@ -23,9 +23,9 @@ object DatePickerImpl: DatePicker {
 
     override fun showDatePickerDialog(context: Context, textView: TextView){
 
-        dpd = DatePickerDialog(context,DatePickerDialog.OnDateSetListener{view, year, month, day ->
+        dpd = DatePickerDialog(context,DatePickerDialog.OnDateSetListener{_, year, month, day ->
             this.year = year
-            date = "$day/$month/$year"
+            date = "$day/${month+1}/$year"
             textView.text = date
         }, y,m,d)
         dpd.show()

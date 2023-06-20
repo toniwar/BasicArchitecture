@@ -1,7 +1,6 @@
 package ru.otus.basicarchitecture.di
 
 import android.content.Context
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import ru.otus.basicarchitecture.data.DatePickerImpl

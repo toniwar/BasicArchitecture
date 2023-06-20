@@ -17,6 +17,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var factory: ActivityVMFactory
     @Inject
     lateinit var fragment1: Fragment1
+    @Inject
+    lateinit var fragment2: Fragment2
+    @Inject
+    lateinit var fragment3: Fragment3
+    @Inject
+    lateinit var fragment4: Fragment4
     private lateinit var vm:ActivityViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as App).appComponent.injectActivity(this)
@@ -27,19 +33,18 @@ class MainActivity : AppCompatActivity() {
             @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when(it){
                 StateFlags.FRAGMENT_1 -> openFragment(fragment1)
-                StateFlags.FRAGMENT_2 -> openFragment(Fragment2())
-                StateFlags.FRAGMENT_3 -> openFragment(Fragment3())
-                StateFlags.FRAGMENT_4 -> openFragment(Fragment4())
+                StateFlags.FRAGMENT_2 -> openFragment(fragment2)
+                StateFlags.FRAGMENT_3 -> openFragment(fragment3)
+                StateFlags.FRAGMENT_4 -> openFragment(fragment4)
             }
         }
-
-
     }
 
     private fun openFragment(fragment:Fragment){
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.mainFrameLayout, fragment )
+            .addToBackStack(null)
             .commit()
     }
 }

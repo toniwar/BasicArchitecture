@@ -10,8 +10,8 @@
         android:id="@+id/f3TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:textAlignment="center"
         android:textSize="18sp"
         android:text="@string/chose_hobby"
@@ -33,7 +33,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hobbyListRV"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="150dp"
             android:padding="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
@@ -44,9 +44,9 @@
     <Button
         android:id="@+id/f3Button"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/next"
 
         app:layout_constraintBottom_toBottomOf="parent"

@@ -26,7 +26,6 @@ class Fragment2ViewModel(
 
     }
 
-
     private fun loadData(){
         mutableOutputData.value = getDataUseCase.getUser()
     }

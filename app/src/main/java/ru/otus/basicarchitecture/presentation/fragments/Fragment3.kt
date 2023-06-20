@@ -1,15 +1,17 @@
 package ru.otus.basicarchitecture.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import ru.otus.basicarchitecture.StateFlags
 import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.databinding.Fragment3Binding
 import ru.otus.basicarchitecture.presentation.HobbyListAdapter
+import ru.otus.basicarchitecture.presentation.viewmodels.ActivityVMFactory
+import ru.otus.basicarchitecture.presentation.viewmodels.ActivityViewModel
 import ru.otus.basicarchitecture.presentation.viewmodels.Fragment3VMFactory
 import ru.otus.basicarchitecture.presentation.viewmodels.Fragment3ViewModel
 import javax.inject.Inject
@@ -20,6 +22,10 @@ class Fragment3 : Fragment() {
     @Inject
     lateinit var factory: Fragment3VMFactory
     private lateinit var viewModel: Fragment3ViewModel
+    @Inject
+    lateinit var activityVMFactory: ActivityVMFactory
+    private lateinit var activityViewModel: ActivityViewModel
+    private val hobbySet = mutableSetOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,13 +39,23 @@ class Fragment3 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireContext().applicationContext as App).appComponent.injectFragment3(this)
         viewModel = ViewModelProvider(this, factory)[Fragment3ViewModel::class.java]
+        activityViewModel =
+            ViewModelProvider(requireActivity(), activityVMFactory)[ActivityViewModel::class.java]
         val adapter = HobbyListAdapter(viewModel)
         binding.hobbyListRV.adapter = adapter
 
         viewModel.data.observe(viewLifecycleOwner){
             adapter.setItemList(it)
-            Log.d("VMAction", it.toString())
-
+            hobbySet.clear()
+            for(i in it){
+                if(i.enabled) hobbySet.add(i.hobby)
+            }
         }
+        binding.f3Button.setOnClickListener { saveData() }
+    }
+
+    private fun saveData(){
+        viewModel.saveData(hobbySet.toSet())
+        activityViewModel.setFlag(StateFlags.FRAGMENT_4)
     }
 }
