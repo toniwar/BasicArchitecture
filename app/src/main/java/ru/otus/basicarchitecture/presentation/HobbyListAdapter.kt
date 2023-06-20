@@ -8,15 +8,14 @@ import ru.otus.basicarchitecture.DISABLED_ITEM
 import ru.otus.basicarchitecture.ENABLED_ITEM
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.domain.models.HobbyItem
-import ru.otus.basicarchitecture.presentation.viewmodels.Fragment3ViewModel
 
 
 
-class HobbyListAdapter(
-    private val vm:Fragment3ViewModel
-): RecyclerView.Adapter<HobbyListViewHolder>() {
+
+class HobbyListAdapter: RecyclerView.Adapter<HobbyListViewHolder>() {
 
     private val itemList = mutableListOf<HobbyItem>()
+    var onItemClick:((item:HobbyItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HobbyListViewHolder {
         val layoutRes = when(viewType){
@@ -36,7 +35,7 @@ class HobbyListAdapter(
         holder.bind(item)
         holder.itemView.setOnClickListener {
             Log.d("ClickOnItem", item.toString())
-            vm.changeEnableState(item)
+            onItemClick?.invoke(item)
             notifyDataSetChanged()
         }
     }

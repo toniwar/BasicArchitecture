@@ -41,8 +41,11 @@ class Fragment3 : Fragment() {
         viewModel = ViewModelProvider(this, factory)[Fragment3ViewModel::class.java]
         activityViewModel =
             ViewModelProvider(requireActivity(), activityVMFactory)[ActivityViewModel::class.java]
-        val adapter = HobbyListAdapter(viewModel)
+        val adapter = HobbyListAdapter()
         binding.hobbyListRV.adapter = adapter
+        adapter.onItemClick = {
+            viewModel.changeEnableState(it)
+        }
 
         viewModel.data.observe(viewLifecycleOwner){
             adapter.setItemList(it)
