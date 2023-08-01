@@ -6,6 +6,7 @@ import ru.otus.basicarchitecture.presentation.fragments.Fragment1
 import ru.otus.basicarchitecture.presentation.fragments.Fragment2
 import ru.otus.basicarchitecture.presentation.fragments.Fragment3
 import ru.otus.basicarchitecture.presentation.fragments.Fragment4
+import ru.otus.basicarchitecture.presentation.fragments.UserAddressFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -21,5 +22,7 @@ interface AppComponent {
     fun injectFragment3(fragment: Fragment3)
 
     fun injectFragment4(fragment: Fragment4)
+
+    fun injectUserAddressFragment(fragment: UserAddressFragment)
 
 }

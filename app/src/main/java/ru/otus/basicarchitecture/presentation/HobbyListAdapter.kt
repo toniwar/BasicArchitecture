@@ -9,9 +9,6 @@ import ru.otus.basicarchitecture.ENABLED_ITEM
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.domain.models.HobbyItem
 
-
-
-
 class HobbyListAdapter: RecyclerView.Adapter<HobbyListViewHolder>() {
 
     private val itemList = mutableListOf<HobbyItem>()
@@ -36,7 +33,7 @@ class HobbyListAdapter: RecyclerView.Adapter<HobbyListViewHolder>() {
         holder.itemView.setOnClickListener {
             Log.d("ClickOnItem", item.toString())
             onItemClick?.invoke(item)
-            notifyDataSetChanged()
+            notifyItemChanged(position)
         }
     }
 

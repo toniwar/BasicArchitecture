@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var fragment1: Fragment1
     @Inject
-    lateinit var fragment2: Fragment2
+    lateinit var fragment2: UserAddressFragment
     @Inject
     lateinit var fragment3: Fragment3
     @Inject

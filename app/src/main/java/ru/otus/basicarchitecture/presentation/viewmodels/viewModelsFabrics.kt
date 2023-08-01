@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package ru.otus.basicarchitecture.presentation.viewmodels
 
 
@@ -9,6 +11,8 @@ import ru.otus.basicarchitecture.domain.usecases.date_use_cases.PickDateUseCase
 import ru.otus.basicarchitecture.domain.usecases.data_use_cases.SaveDataUseCase
 import ru.otus.basicarchitecture.domain.usecases.user_hobby_list_use_cases.SetHobbyUseCase
 import ru.otus.basicarchitecture.domain.usecases.date_use_cases.ValidationUseCase
+import ru.otus.basicarchitecture.domain.usecases.network_use_cases.GetNetworkResponseUseCase
+import ru.otus.basicarchitecture.domain.usecases.network_use_cases.SendNetworkRequestUseCase
 
 class Fragment1VMFactory(
     private val getDataUseCase: GetDataUseCase,
@@ -61,6 +65,24 @@ class Fragment4VMFactory(
         ) as T
     }
 }
+
+class UserAddressFragmentVMFactory(
+    private val getDataUseCase: GetDataUseCase,
+    private val saveDataUseCase: SaveDataUseCase,
+    private val getNetworkResponseUseCase: GetNetworkResponseUseCase,
+    private val sendNetworkRequestUseCase: SendNetworkRequestUseCase
+): ViewModelProvider.Factory{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return UserAddressFragmentViewModel(
+            getDataUseCase,
+            saveDataUseCase,
+            getNetworkResponseUseCase,
+            sendNetworkRequestUseCase
+        ) as T
+    }
+}
+
+
 
 
 class ActivityVMFactory(): ViewModelProvider.Factory{
