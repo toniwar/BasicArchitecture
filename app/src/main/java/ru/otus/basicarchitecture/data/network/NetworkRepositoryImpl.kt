@@ -11,7 +11,7 @@ class NetworkRepositoryImpl: NetworkRepository {
         Network.request = request
     }
 
-    override fun getResponse(): Flow<NetworkResult> {
+    override fun getResponse(): Flow<NetworkResult<Any>> {
         return flow {
 
             emit(Network.sendRequest())

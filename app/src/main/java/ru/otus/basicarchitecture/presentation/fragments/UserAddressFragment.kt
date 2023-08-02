@@ -1,22 +1,22 @@
 package ru.otus.basicarchitecture.presentation.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.StateFlags
 import ru.otus.basicarchitecture.app.App
@@ -35,10 +35,13 @@ import javax.inject.Inject
 
 
 class UserAddressFragment : Fragment() {
+    private val request by lazy { NetworkRequest() }
     private val binding by lazy { FragmentUserAddressBinding.inflate(layoutInflater) }
+
     @Inject
     lateinit var factory: UserAddressFragmentVMFactory
     private lateinit var viewModel: UserAddressFragmentViewModel
+
     @Inject
     lateinit var activityVMFactory: ActivityVMFactory
     private lateinit var activityViewModel: ActivityViewModel
@@ -52,6 +55,7 @@ class UserAddressFragment : Fragment() {
         return binding.root
     }
 
+    @OptIn(FlowPreview::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireContext().applicationContext as App).appComponent.injectUserAddressFragment(this)
@@ -59,7 +63,7 @@ class UserAddressFragment : Fragment() {
         activityViewModel =
             ViewModelProvider(requireActivity(), activityVMFactory)[ActivityViewModel::class.java]
         adapter =
-            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item,)
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item)
         binding.editAddress.setAdapter(adapter)
 
         viewModel.outputData.observe(viewLifecycleOwner) { user ->
@@ -77,6 +81,10 @@ class UserAddressFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sendData(
+                    binding.editAddress.textChanges().debounce(500)
+                )
+
                 viewModel.state.collect { result ->
                     result?.let {
 
@@ -89,42 +97,40 @@ class UserAddressFragment : Fragment() {
                                 }
                             }
 
-                            is NetworkError -> {Toast.makeText(requireContext(),
-                                "${result.errorCode}: ${result.errorMessage}",
-                                Toast.LENGTH_LONG
+                            is NetworkError -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "${result.errorCode}: ${result.errorMessage}",
+                                    Toast.LENGTH_LONG
 
-                            ).show()}
+                                ).show()
+                            }
 
-                            is NetworkException<*> -> {}
+                            is NetworkException -> {
+                                Log.e("NetworkException", (result.exception as Throwable).message!!)
+                            }
 
                         }
                     }
 
-
                 }
             }
 
-        }
 
-        binding.editAddress.doOnTextChanged { text, start, before, count ->
-
-            val request = flow<String> {
-                emit(text.toString())
-            }
-            sendData(request)
         }
 
     }
 
-    private fun sendData(flow: Flow<String>){
+
+    private fun sendData(flow: Flow<String>) {
         CoroutineScope(Dispatchers.IO).launch {
             flow.collect {
-                delay(500)
-                viewModel.sendRequest(NetworkRequest(query = it))
+                request.query = it
+                viewModel.sendRequest(request)
             }
         }
     }
-
 
 
 }
+

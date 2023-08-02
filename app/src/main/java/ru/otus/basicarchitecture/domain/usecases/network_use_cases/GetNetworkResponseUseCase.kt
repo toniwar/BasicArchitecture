@@ -6,7 +6,7 @@ import ru.otus.basicarchitecture.domain.repository.NetworkRepository
 
 class GetNetworkResponseUseCase(private val networkRepository: NetworkRepository) {
 
-    fun getResponse(): Flow<NetworkResult> {
+    fun getResponse(): Flow<NetworkResult<Any>> {
         return networkRepository.getResponse()
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class UserAddressFragmentViewModel(
 
     ): ViewModel() {
 
-    private val _state = MutableStateFlow<NetworkResult?>(null)
+    private val _state = MutableStateFlow<NetworkResult<Any>?>(null)
     val state = _state.asStateFlow()
 
     private val mutableOutputData = MutableLiveData<User>()
@@ -54,8 +55,9 @@ class UserAddressFragmentViewModel(
     }
 
 
-    fun sendRequest(request: NetworkRequest){
+    suspend fun sendRequest(request: NetworkRequest){
         sendNetworkRequestUseCase.sendRequest(request)
+        delay(100)
 
         getResult()
     }
@@ -64,7 +66,6 @@ class UserAddressFragmentViewModel(
 
     private fun getResult() {
         viewModelScope.launch {
-
             getNetworkResponseUseCase.getResponse().collect{
                 _state.value = it
 
