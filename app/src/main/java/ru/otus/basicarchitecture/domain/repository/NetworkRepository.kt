@@ -8,7 +8,7 @@ interface NetworkRepository {
 
     fun sendRequest(request: NetworkRequest)
 
-    fun getResponse(): Flow<NetworkResult>
+    fun getResponse(): Flow<NetworkResult<Any>>
 
 
 }

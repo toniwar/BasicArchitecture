@@ -1,5 +1,6 @@
 package ru.otus.basicarchitecture.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,6 +33,7 @@ class Fragment4 : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireContext().applicationContext as App).appComponent.injectFragment4(this)
@@ -40,7 +42,7 @@ class Fragment4 : Fragment() {
             binding.apply {
                 f4Name.text = NAME + it.name + " " + it.surname
                 f4Date.text = BIRTH_DATE + it.birthDate
-                f4Address.text = ADDRESS + "${it.country}, ${it.city}, ${it.address}"
+                f4Address.text = ADDRESS + it.address
                 val interests = it.hobby.joinToString(", ")
                 f4Interests.text = INTERESTS + interests
             }
