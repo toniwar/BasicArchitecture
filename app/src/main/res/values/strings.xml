@@ -10,6 +10,8 @@
     <string name="enter_address">Enter Your address</string>
     <string name="chose_hobby">Chose hobby</string>
     <string name="user_info">User Info</string>
+    <string name="register_button_text">Create new user</string>
+    <string name="show_users_button_text">Select a user from the list</string>
 
     <string-array name="hobbyList">
         <item>Frontend</item>
