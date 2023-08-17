@@ -8,7 +8,7 @@ import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.di.DaggerActivityComponent
 import ru.otus.basicarchitecture.domain.repositories.UserRepository
 import ru.otus.basicarchitecture.presentation.fragments.AddressFragment
-import ru.otus.basicarchitecture.presentation.fragments.FragmentListener
+import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
 import ru.otus.basicarchitecture.presentation.fragments.Menu
 import ru.otus.basicarchitecture.presentation.fragments.StartRegistrationFragment
 import ru.otus.basicarchitecture.presentation.fragments.UserInfo
@@ -16,11 +16,16 @@ import ru.otus.basicarchitecture.presentation.fragments.UserInterestsFragment
 import ru.otus.basicarchitecture.presentation.fragments.UserListFragment
 import javax.inject.Inject
 
+
 class MainActivity : AppCompatActivity(), FragmentListener {
 
-    private val appComponent by lazy { App().provideAppComponent() }
+
+    private val appComponent by lazy { App.provideApp().provideAppComponent() }
 
     private val component by lazy {DaggerActivityComponent.factory().create(appComponent)}
+
+    @Inject
+    lateinit var menu: Menu
 
     @Inject
     lateinit var startRegistrationFragment: StartRegistrationFragment
@@ -46,7 +51,7 @@ class MainActivity : AppCompatActivity(), FragmentListener {
 
     override fun action(flag: FragmentListener.Companion.ActionFlags) {
         when(flag){
-            FragmentListener.Companion.ActionFlags.FRAGMENT_1 -> openFragment(Menu())
+            FragmentListener.Companion.ActionFlags.FRAGMENT_1 -> openFragment(menu)
             FragmentListener.Companion.ActionFlags.FRAGMENT_2 -> openFragment(startRegistrationFragment)
             FragmentListener.Companion.ActionFlags.FRAGMENT_3 -> openFragment(addressFragment)
             FragmentListener.Companion.ActionFlags.FRAGMENT_4 -> openFragment(UserInterestsFragment())

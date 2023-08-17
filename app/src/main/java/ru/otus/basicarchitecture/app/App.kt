@@ -4,13 +4,12 @@ import android.app.Application
 import ru.otus.basicarchitecture.di.AppComponent
 import ru.otus.basicarchitecture.di.DaggerAppComponent
 
+
+
+
 class App: Application() {
 
-    private val appComponent by lazy { DaggerAppComponent
-        .builder()
-        .context(this)
-        .build()
-    }
+    private val appComponent by lazy { DaggerAppComponent.factory().create(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -19,6 +18,11 @@ class App: Application() {
 
     fun provideAppComponent(): AppComponent {
         return appComponent
+    }
+
+    companion object{
+        private val app = App()
+        fun provideApp() = app
     }
 
 

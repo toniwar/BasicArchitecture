@@ -6,28 +6,33 @@ import dagger.Component
 import dagger.Module
 import ru.otus.basicarchitecture.app.App
 
+
+
 @Component
 interface AppComponent {
     fun inject(app:App)
 
+
     fun provideContext(): Context
 
 
+    @Component.Factory
+    interface AppComponentFactory{
 
-    @Component.Builder
-    interface AppComponentBuilder{
 
-        @BindsInstance
-        fun context(context: Context): AppComponentBuilder
+        fun create(
+            @BindsInstance
+            context: Context
+        ): AppComponent
 
-        fun build(): AppComponent
     }
 
 }
-
 
 
 @Module
 class DataModule{
 
 }
+
+

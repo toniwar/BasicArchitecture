@@ -8,20 +8,21 @@ import dagger.Module
 import ru.otus.basicarchitecture.data.repositories.UserRepositoryImpl
 import ru.otus.basicarchitecture.domain.repositories.UserRepository
 import ru.otus.basicarchitecture.presentation.activity.MainActivity
+import javax.inject.Singleton
 
-
-
-
+@Singleton
 @Component(
     dependencies = [AppComponent::class],
     modules = [ActivityModule::class]
 )
+
 interface ActivityComponent {
 
     fun inject(activity: MainActivity)
 
     @Component.Factory
     interface ActivityComponentFactory{
+
 
         fun create(appComponent: AppComponent): ActivityComponent
     }
@@ -33,7 +34,9 @@ interface ActivityComponent {
 abstract class ActivityModule{
 
     @Binds
+    @Singleton
     abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+
 
 }
 

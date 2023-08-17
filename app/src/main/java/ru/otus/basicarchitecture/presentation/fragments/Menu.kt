@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.otus.basicarchitecture.databinding.FragmentMenuBinding
+import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
+import javax.inject.Inject
 
 
-class Menu : Fragment() {
+class Menu @Inject constructor() : Fragment() {
     private lateinit var listener: FragmentListener
     private val binding by lazy { FragmentMenuBinding.inflate(layoutInflater) }
 
@@ -18,6 +20,7 @@ class Menu : Fragment() {
         if(context is FragmentListener){
             listener = context
         }
+        else throw RuntimeException("Unknown element: $context")
     }
 
 
@@ -26,7 +29,6 @@ class Menu : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         return binding.root
     }
 

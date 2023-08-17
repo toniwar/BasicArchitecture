@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.presentation.fragments
+package ru.otus.basicarchitecture.presentation.fragments.listeners
 
 
 
