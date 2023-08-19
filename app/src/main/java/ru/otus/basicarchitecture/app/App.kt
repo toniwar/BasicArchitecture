@@ -1,23 +1,20 @@
 package ru.otus.basicarchitecture.app
 
 import android.app.Application
-import ru.otus.basicarchitecture.di.AppComponent
-import ru.otus.basicarchitecture.di.DaggerAppComponent
-
-
-
+import ru.otus.basicarchitecture.di.DaggerMainComponent
+import ru.otus.basicarchitecture.di.MainComponent
 
 class App: Application() {
 
-    private val appComponent by lazy { DaggerAppComponent.factory().create(this) }
+    private val mainComponent by lazy { DaggerMainComponent.factory().create(this) }
 
     override fun onCreate() {
         super.onCreate()
-        appComponent.inject(this)
+        mainComponent.inject(this)
     }
 
-    fun provideAppComponent(): AppComponent {
-        return appComponent
+    fun provideMainComponent(): MainComponent {
+        return mainComponent
     }
 
     companion object{

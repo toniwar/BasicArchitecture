@@ -2,6 +2,7 @@ package ru.otus.basicarchitecture.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
+import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.databinding.FragmentStartRegistrationBinding
+import ru.otus.basicarchitecture.di.DaggerChildComponent
 import ru.otus.basicarchitecture.presentation.DateChecker
 import ru.otus.basicarchitecture.presentation.dialogs.DatePickerDialog
 import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
 import ru.otus.basicarchitecture.presentation.view_models.StartRegistrationFragmentVM
+import ru.otus.basicarchitecture.presentation.view_models.view_models_fabric.ViewModelsFabric
 import javax.inject.Inject
 
 
@@ -25,10 +29,16 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
     private val binding by lazy {
         FragmentStartRegistrationBinding.inflate(layoutInflater)
     }
+    private val mainComponent by lazy { App.provideApp().provideMainComponent() }
 
+    private val component by lazy {DaggerChildComponent.factory().create(mainComponent)}
+
+    @Inject
+    lateinit var fabric:ViewModelsFabric
     private val vm by lazy {
-        ViewModelProvider(requireActivity())[StartRegistrationFragmentVM::class.java]
+        ViewModelProvider(this, fabric)[StartRegistrationFragmentVM::class.java]
     }
+
     private lateinit var listener: FragmentListener
 
 
@@ -49,8 +59,10 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        component.injectStartRegistrationFragment(this)
+        Log.d("CheckVMInstance", vm.toString())
 
-        lifecycleScope.launch {
+        val job1 = lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 DateChecker.dateMap.collect { dMap ->
                     binding.apply {
@@ -60,6 +72,14 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
                             yearEt.setText(dMap[DateChecker.DateContent.YYYY])
                         }
                     }
+                }
+            }
+        }
+
+        val job2 = lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                vm.state.collect{
+
                 }
             }
         }
@@ -79,6 +99,7 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
                 }
 
             }
+
             dateEt.textChanges(dateEt, monthEt, yearEt)
             monthEt.textChanges(dateEt, monthEt, yearEt)
             yearEt.textChanges(dateEt, monthEt, yearEt)
@@ -86,7 +107,7 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
         }
     }
 
-    private fun EditText.textChanges(
+    private fun View.textChanges(
         dateET: EditText,
         monthET: EditText,
         yearET: EditText
@@ -94,11 +115,11 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
         setOnFocusChangeListener { _, b ->
 
             if(!b) {
-                (DateChecker.verifyDate(
+                DateChecker.verifyDate(
                     dateET.text.toString(),
                     monthET.text.toString(),
                     yearET.text.toString()
-                ))
+                )
             }
         }
 

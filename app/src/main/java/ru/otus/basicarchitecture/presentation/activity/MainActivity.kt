@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.app.App
-import ru.otus.basicarchitecture.di.DaggerActivityComponent
+import ru.otus.basicarchitecture.di.DaggerChildComponent
 import ru.otus.basicarchitecture.domain.repositories.UserRepository
 import ru.otus.basicarchitecture.presentation.fragments.AddressFragment
 import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
@@ -20,9 +20,8 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), FragmentListener {
 
 
-    private val appComponent by lazy { App.provideApp().provideAppComponent() }
-
-    private val component by lazy {DaggerActivityComponent.factory().create(appComponent)}
+    private val mainComponent by lazy { App.provideApp().provideMainComponent() }
+    private val component by lazy { DaggerChildComponent.factory().create(mainComponent) }
 
     @Inject
     lateinit var menu: Menu
@@ -35,11 +34,6 @@ class MainActivity : AppCompatActivity(), FragmentListener {
 
     @Inject
     lateinit var userRepository: UserRepository
-
-
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,4 +61,5 @@ class MainActivity : AppCompatActivity(), FragmentListener {
             .addToBackStack("$fragment")
             .commit()
     }
+
 }

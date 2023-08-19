@@ -46,6 +46,7 @@ object DateChecker {
         }
         val checkedDay = numberFormatChecker(day?:"", 1..maxRangeForDay)
         dateMap[DateContent.DD] = if(checkedDay == -1)"" else checkedDay.toString()
+        mutableDateMap.value = null
 
         mutableDateMap.value = dateMap.toMap()
 
