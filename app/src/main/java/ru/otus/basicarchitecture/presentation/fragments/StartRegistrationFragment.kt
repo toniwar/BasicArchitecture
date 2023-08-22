@@ -15,8 +15,9 @@ import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.app.App
 import ru.otus.basicarchitecture.databinding.FragmentStartRegistrationBinding
 import ru.otus.basicarchitecture.di.DaggerChildComponent
-import ru.otus.basicarchitecture.presentation.custom_views.DateEditText
-import ru.otus.basicarchitecture.presentation.dialogs.DatePickerDialog
+import ru.otus.basicarchitecture.domain.repositories.DataStoreManager
+import ru.otus.basicarchitecture.presentation.date_manage.DateChecker
+import ru.otus.basicarchitecture.presentation.date_manage.DatePickerDialog
 import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
 import ru.otus.basicarchitecture.presentation.view_models.StartRegistrationFragmentVM
 import ru.otus.basicarchitecture.presentation.view_models.view_models_fabric.ViewModelsFabric
@@ -62,7 +63,7 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
         Log.d("CheckVMInstance", vm.toString())
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                DateEditText.Companion.DateChecker.dateFlow.collect { dHolder ->
+                DateChecker.dateFlow.collect { dHolder ->
                     binding.apply {
                         dHolder?.let {
                             dayEt.setText(if(it.day == -1)"" else it.day.toString())
@@ -75,13 +76,45 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
+                val keySet= setOf(
+                    DataStoreManager.Keys.UserInfoKeys.NAME,
+                    DataStoreManager.Keys.UserInfoKeys.SURNAME
+                )
+                vm.getUserInfoFromDataStore(keySet)
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
                 vm.state.collect{
+                    val info = it?.info
+                    binding.apply {
+
+                        info?.let {
+                            it.forEach { data ->
+                                when (data.key) {
+                                    DataStoreManager.Keys.UserInfoKeys.NAME ->
+                                        nameEditText.setText(data.value)
+                                    DataStoreManager.Keys.UserInfoKeys.SURNAME ->
+                                        surnameEditText.setText(data.value)
+                                    else ->{}
+                                }
+
+                            }
+                        }
+                    }
                 }
             }
         }
         binding.apply {
             startRegistrationFragmentButton.setOnClickListener {
-                listener.action(FragmentListener.Companion.ActionFlags.FRAGMENT_3)
+                val data = listOf(
+                    nameEditText.text.toString(),
+                    surnameEditText.text.toString(),
+                    dayEt.text.toString(),
+                    monthEt.text.toString(),
+                    yearEt.text.toString()
+                )
+                if(vm.validation(yearEt.text.toString(), data)) listener.action(FragmentListener.Companion.ActionFlags.FRAGMENT_3)
             }
             calendarIcon.setOnClickListener {
                 DatePickerDialog.showDatePickerDialog(requireContext()) {

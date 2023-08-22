@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.presentation.dialogs
+package ru.otus.basicarchitecture.presentation.date_manage
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -17,7 +17,7 @@ object DatePickerDialog: DatePicker {
 
         dpd = DatePickerDialog(context,DatePickerDialog.OnDateSetListener{_, year, month, day ->
             dateCallBack.invoke("$day.${month+1}.$year")
-        }, y,m,d)
+        }, y, m, d)
         dpd.show()
 
     }

@@ -75,7 +75,7 @@
         android:background="@drawable/birth_date_layout_drawable"
         >
 
-        <ru.otus.basicarchitecture.presentation.custom_views.DateEditText
+        <ru.otus.basicarchitecture.presentation.date_manage.DateEditText
             android:id="@+id/day_et"
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -84,7 +84,7 @@
             android:inputType="date"
             app:customIntegerValue="0"
             />
-        <ru.otus.basicarchitecture.presentation.custom_views.DateEditText
+        <ru.otus.basicarchitecture.presentation.date_manage.DateEditText
             android:id="@+id/month_et"
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -94,7 +94,7 @@
             app:customIntegerValue="1"
             />
 
-        <ru.otus.basicarchitecture.presentation.custom_views.DateEditText
+        <ru.otus.basicarchitecture.presentation.date_manage.DateEditText
             android:id="@+id/year_et"
             android:layout_width="0dp"
             android:layout_weight="4"

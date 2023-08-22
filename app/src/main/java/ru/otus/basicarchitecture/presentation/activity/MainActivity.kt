@@ -11,7 +11,7 @@ import ru.otus.basicarchitecture.presentation.fragments.AddressFragment
 import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
 import ru.otus.basicarchitecture.presentation.fragments.Menu
 import ru.otus.basicarchitecture.presentation.fragments.StartRegistrationFragment
-import ru.otus.basicarchitecture.presentation.fragments.UserInfo
+import ru.otus.basicarchitecture.presentation.fragments.UserInfoFragment
 import ru.otus.basicarchitecture.presentation.fragments.UserInterestsFragment
 import ru.otus.basicarchitecture.presentation.fragments.UserListFragment
 import javax.inject.Inject
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), FragmentListener {
             FragmentListener.Companion.ActionFlags.FRAGMENT_2 -> openFragment(startRegistrationFragment)
             FragmentListener.Companion.ActionFlags.FRAGMENT_3 -> openFragment(addressFragment)
             FragmentListener.Companion.ActionFlags.FRAGMENT_4 -> openFragment(UserInterestsFragment())
-            FragmentListener.Companion.ActionFlags.FRAGMENT_5 -> openFragment(UserInfo())
+            FragmentListener.Companion.ActionFlags.FRAGMENT_5 -> openFragment(UserInfoFragment())
             FragmentListener.Companion.ActionFlags.FRAGMENT_6 -> openFragment(UserListFragment())
 
         }

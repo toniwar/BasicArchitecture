@@ -6,6 +6,7 @@ import ru.otus.basicarchitecture.di.MainComponent
 
 class App: Application() {
 
+
     private val mainComponent by lazy { DaggerMainComponent.factory().create(this) }
 
     override fun onCreate() {

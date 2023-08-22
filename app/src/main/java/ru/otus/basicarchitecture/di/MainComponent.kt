@@ -7,11 +7,13 @@ import ru.otus.basicarchitecture.app.App
 
 
 
+
 @MainComponentScope
-@Component()
+@Component
 interface MainComponent {
     fun inject(app:App)
     fun provideContext(): Context
+
 
     @Component.Factory
     interface AppComponentFactory{
@@ -22,6 +24,7 @@ interface MainComponent {
 
     }
 }
+
 
 
 
