@@ -29,7 +29,7 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
     private val binding by lazy {
         FragmentStartRegistrationBinding.inflate(layoutInflater)
     }
-    private val mainComponent by lazy { App.provideApp().provideMainComponent() }
+    private val mainComponent by lazy { (requireActivity().application as App).provideMainComponent() }
 
     private val component by lazy {DaggerChildComponent.factory().create(mainComponent)}
 

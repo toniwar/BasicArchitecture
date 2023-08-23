@@ -17,12 +17,4 @@ class App: Application() {
     fun provideMainComponent(): MainComponent {
         return mainComponent
     }
-
-    companion object{
-        private val app = App()
-        fun provideApp() = app
-    }
-
-
-
 }
