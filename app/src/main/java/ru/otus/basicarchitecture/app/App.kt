@@ -18,11 +18,4 @@ class App: Application() {
         return mainComponent
     }
 
-    companion object{
-        private val app = App()
-        fun provideApp() = app
-    }
-
-
-
 }

@@ -66,7 +66,7 @@ class DataStoreManagerImpl @Inject constructor(context: Context): DataStoreManag
     }
     companion object{
         private const val USER_DATA_STORE = "user_data_store"
-        val Context.dataStore  by preferencesDataStore(USER_DATA_STORE)
+        private val Context.dataStore  by preferencesDataStore(USER_DATA_STORE)
     }
 
 

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -24,12 +25,12 @@ import ru.otus.basicarchitecture.presentation.view_models.view_models_fabric.Vie
 import javax.inject.Inject
 
 
-class StartRegistrationFragment @Inject constructor() : Fragment() {
+class StartRegistrationFragment: Fragment() {
 
     private val binding by lazy {
         FragmentStartRegistrationBinding.inflate(layoutInflater)
     }
-    private val mainComponent by lazy { App.provideApp().provideMainComponent() }
+    private val mainComponent by lazy { (requireActivity().application as App).provideMainComponent() }
 
     private val component by lazy {DaggerChildComponent.factory().create(mainComponent)}
 
@@ -40,6 +41,15 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
     }
 
     private lateinit var listener: FragmentListener
+
+    private val keys = listOf(
+        DataStoreManager.Keys.UserInfoKeys.NAME,
+        DataStoreManager.Keys.UserInfoKeys.SURNAME,
+        DataStoreManager.Keys.UserInfoKeys.BIRTH_DAY,
+        DataStoreManager.Keys.UserInfoKeys.BIRTH_MONTH,
+        DataStoreManager.Keys.UserInfoKeys.BIRTH_YEAR
+
+    )
 
 
     override fun onAttach(context: Context) {
@@ -76,30 +86,34 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                val keySet= setOf(
-                    DataStoreManager.Keys.UserInfoKeys.NAME,
-                    DataStoreManager.Keys.UserInfoKeys.SURNAME
-                )
-                vm.getUserInfoFromDataStore(keySet)
+                keys.forEach {
+                    vm.getUserInfoFromDataStore(it)
+                }
             }
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 vm.state.collect{
-                    val info = it?.info
+                    val info = it
                     binding.apply {
 
-                        info?.let {
-                            it.forEach { data ->
-                                when (data.key) {
+                        info?.let { data ->
+
+                                when (data.first) {
                                     DataStoreManager.Keys.UserInfoKeys.NAME ->
-                                        nameEditText.setText(data.value)
+                                        nameEditText.setText(data.second)
                                     DataStoreManager.Keys.UserInfoKeys.SURNAME ->
-                                        surnameEditText.setText(data.value)
+                                        surnameEditText.setText(data.second)
+                                    DataStoreManager.Keys.UserInfoKeys.BIRTH_DAY ->
+                                        dayEt.setText(data.second)
+                                    DataStoreManager.Keys.UserInfoKeys.BIRTH_MONTH ->
+                                        monthEt.setText(data.second)
+                                    DataStoreManager.Keys.UserInfoKeys.BIRTH_YEAR ->
+                                        yearEt.setText(data.second)
                                     else ->{}
                                 }
 
-                            }
+
                         }
                     }
                 }
@@ -107,14 +121,19 @@ class StartRegistrationFragment @Inject constructor() : Fragment() {
         }
         binding.apply {
             startRegistrationFragmentButton.setOnClickListener {
-                val data = listOf(
-                    nameEditText.text.toString(),
-                    surnameEditText.text.toString(),
-                    dayEt.text.toString(),
-                    monthEt.text.toString(),
-                    yearEt.text.toString()
+                val data = mapOf(
+                    DataStoreManager.Keys.UserInfoKeys.NAME to nameEditText.text.toString(),
+                    DataStoreManager.Keys.UserInfoKeys.SURNAME to surnameEditText.text.toString(),
+                    DataStoreManager.Keys.UserInfoKeys.BIRTH_DAY to dayEt.text.toString(),
+                    DataStoreManager.Keys.UserInfoKeys.BIRTH_MONTH to monthEt.text.toString(),
+                    DataStoreManager.Keys.UserInfoKeys.BIRTH_YEAR to yearEt.text.toString()
                 )
-                if(vm.validation(yearEt.text.toString(), data)) listener.action(FragmentListener.Companion.ActionFlags.FRAGMENT_3)
+                if(vm.checkForEmptyData(data)){
+                    if(vm.checkUserAge(yearEt.text.toString()))
+                        listener.action(FragmentListener.Companion.ActionFlags.FRAGMENT_3)
+                    else Toast.makeText(activity, "Access denied!", Toast.LENGTH_SHORT).show()
+                }
+                else Toast.makeText(activity, "Fill in the empty fields!", Toast.LENGTH_SHORT).show()
             }
             calendarIcon.setOnClickListener {
                 DatePickerDialog.showDatePickerDialog(requireContext()) {
