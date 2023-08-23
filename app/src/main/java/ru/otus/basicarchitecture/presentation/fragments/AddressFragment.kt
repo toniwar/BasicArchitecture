@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.otus.basicarchitecture.R
-import javax.inject.Inject
 
 
-class AddressFragment @Inject constructor() : Fragment() {
+
+class AddressFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

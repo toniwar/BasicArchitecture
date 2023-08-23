@@ -5,8 +5,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import ru.otus.basicarchitecture.domain.entities.UserInfo
 import ru.otus.basicarchitecture.domain.repositories.DataStoreManager
 import ru.otus.basicarchitecture.domain.use_cases.InputDataCheckerUseCase
 import ru.otus.basicarchitecture.presentation.date_manage.DateChecker
@@ -23,38 +24,39 @@ class  StartRegistrationFragmentVM @Inject constructor(
 
 
 
-    private lateinit var userInfo: UserInfo
-
-
-    private val mutableState = MutableStateFlow<UserInfo?>(null)
-    val state: StateFlow<UserInfo?> get() = mutableState.asStateFlow()
+    private val mutableState =
+        MutableStateFlow<Pair<DataStoreManager.Keys.UserInfoKeys, String?>?>(null)
+    val state: StateFlow<Pair<DataStoreManager.Keys.UserInfoKeys, String?>?> get() = mutableState.asStateFlow()
 
 
 
 
-    fun validation(year: String, data: List<String?>): Boolean{
-        return inputDataCheckerUseCase.checkInputData(data) && DateChecker.ageValidator(year)
+    fun checkForEmptyData(data: Map<DataStoreManager.Keys.UserInfoKeys,String?>): Boolean{
+        data.forEach {
+            saveUserInfoToDataStore(it.key, it.value?:"")
+        }
+        return inputDataCheckerUseCase.checkInputData(data.values)
 
     }
 
-    fun saveUserInfoToDataStore(key: DataStoreManager.Keys.UserInfoKeys, value: String){
+    fun checkUserAge(birthYear: String?): Boolean{
+        return DateChecker.ageValidator(birthYear)
+    }
+
+    private fun saveUserInfoToDataStore(key: DataStoreManager.Keys.UserInfoKeys, value: String){
         viewModelScope.launch {
             dataStoreManager.saveUserInfoToDataStore(key, value)
         }
     }
 
-    suspend fun getUserInfoFromDataStore(keys: Set<DataStoreManager.Keys.UserInfoKeys>){
-        val userInfoMap =
-            mutableMapOf<DataStoreManager.Keys.UserInfoKeys, String>()
-        keys.forEach {key->
-            dataStoreManager.getUserInfoFromDataStore(key).collect {
-                userInfoMap[key] = it?:""
-            }
+    fun getUserInfoFromDataStore(key: DataStoreManager.Keys.UserInfoKeys){
 
-        }
-        val newUserInfo = userInfo.copy(info = userInfoMap)
-        userInfo = newUserInfo
-        mutableState.value = userInfo
+            dataStoreManager.getUserInfoFromDataStore(key)
+                .onEach{
+               mutableState.value = Pair(key,it)
+            }
+                .launchIn(viewModelScope)
+
 
     }
 

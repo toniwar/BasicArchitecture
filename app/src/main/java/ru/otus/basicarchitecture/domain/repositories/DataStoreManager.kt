@@ -17,7 +17,9 @@ interface DataStoreManager {
 
             NAME("user_name"),
             SURNAME("user_surname"),
-            AGE("user_age"),
+            BIRTH_DAY("user_birth_day"),
+            BIRTH_MONTH("user_birth_month"),
+            BIRTH_YEAR("user_birth_year"),
             ADDRESS("user_address"),
             INTERESTS("user_interests")
         }

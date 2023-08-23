@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import ru.otus.basicarchitecture.databinding.FragmentMenuBinding
 import ru.otus.basicarchitecture.presentation.fragments.listeners.FragmentListener
-import javax.inject.Inject
 
 
-class Menu @Inject constructor() : Fragment() {
+
+class Menu : Fragment() {
     private lateinit var listener: FragmentListener
     private val binding by lazy { FragmentMenuBinding.inflate(layoutInflater) }
 
